@@ -5,6 +5,8 @@
 #include <gccore.h>
 #include <stdio.h>
 #include <stdlib.h>
+//font data
+#include "font_png.h"
 
 int main(int argc, char **argv) {
     // Initialise the Graphics & Video subsystem
@@ -13,6 +15,11 @@ int main(int argc, char **argv) {
     // Initialise the GameCube controllers
     PAD_Init();
 
+
+    //load font
+    GRRLIB_texImg *tex_font = GRRLIB_LoadTexture(font_png);
+    GRRLIB_InitTileSet(tex_font, 8, 8, 32);
+    
     // Loop forever
     while(1) {
         PAD_ScanPads(); // Scan the GameCube controllers
@@ -33,12 +40,9 @@ int main(int argc, char **argv) {
         //make our text and format it
         char msg[255];
         snprintf(msg, sizeof(msg), "Current Left Stick Coords: %d, %d", leftStickX, leftStickY);
-        //draw our message syntax is GRRLIB_PrintfTTF(x, y, font, message, pt size, color)
-        GRRLIB_PrintfTTF(100, 100, alagard, msg, 24, 0xcdd6f4ff);
+        //draw our message
+        GRRLIB_Printf(8, 8, tex_font, 0xcdd6f4ff, 2, msg);
 
-        char label[255];
-        snprintf(label, sizeof(label), "Visualization of C-Stick coords on 1/4 scale:");
-        GRRLIB_PrintfTTF(175, 225, alagard, label, 14, 0xcdd6f4ff);
         //draw a circle based off of the c-stick position
         GRRLIB_Line(300, 300, cStickX/4 + 300, -cStickY/4 + 300, 0xfab387ff);
         GRRLIB_Circle(cStickX/4 + 300, -cStickY/4 + 300, 15, 0xf9e2afff, 1);
