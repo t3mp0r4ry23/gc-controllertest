@@ -37,19 +37,25 @@ int main(int argc, char **argv) {
         //make the bg to catppuccin mocha base
         GRRLIB_SetBackgroundColour(0x1e, 0x1e, 0x2e, 0xFF);
 
+        /* figure out something to do with this later
         //make our text and format it
         char msg[255];
         snprintf(msg, sizeof(msg), "Current Left Stick Coords: %d, %d", leftStickX, leftStickY);
         //draw our message
         GRRLIB_Printf(8, 8, tex_font, 0xcdd6f4ff, 2, msg);
+        */
 
         //draw rectangles for the triggers
-        GRRLIB_Rectangle(24, 24, 32, 192 - triggerL / 2, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_L);
-        GRRLIB_Rectangle(90, 24, 32, 192 - triggerR / 2, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_R);
-        
-        //draw a circle based off of the c-stick position
+        GRRLIB_Rectangle(64, 96, 32, -64 + triggerL / 8, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_L);
+        GRRLIB_Rectangle(544, 96, 32, -64 + triggerR / 8, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_R);
+
+        //draw a visual of the left stick position
+        GRRLIB_Line(128, 128, leftStickX / 8 + 128, -leftStickY / 8 + 128, 0xcdd6f4ff);
+        GRRLIB_Circle(leftStickX / 4 + 128, -leftStickY / 4 + 128, 16, 0xcdd6f4ff, 1);
+
+        //draw a visual of the c-stick position
         GRRLIB_Line(300, 300, cStickX / 4 + 300, -cStickY / 4 + 300, 0xfab387ff);
-        GRRLIB_Circle(cStickX / 4 + 300, -cStickY / 4 + 300, 15, 0xf9e2afff, 1);
+        GRRLIB_Circle(cStickX / 4 + 300, -cStickY / 4 + 300, 16, 0xf9e2afff, 1);
 
         GRRLIB_Render(); // Render the frame buffer to the TV
     }
