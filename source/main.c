@@ -50,12 +50,14 @@ int main(int argc, char **argv) {
         GRRLIB_Rectangle(544, 96, 32, -64 + triggerR / 8, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_R);
 
         //draw a visual of the left stick position
-        GRRLIB_Line(128, 128, leftStickX / 8 + 128, -leftStickY / 8 + 128, 0xcdd6f4ff);
-        GRRLIB_Circle(leftStickX / 4 + 128, -leftStickY / 4 + 128, 16, 0xcdd6f4ff, 1);
+        GRRLIB_Line(160, 160, leftStickX / 4 + 160, -leftStickY / 4 + 160, 0xcdd6f4ff);
+        GRRLIB_Circle(leftStickX / 4 + 160, -leftStickY / 4 + 160, 16, 0xcdd6f4ff, 1);
+        GRRLIB_Rectangle(128, 128, 64, 64, 0xcdd6f4ff, 0);
 
         //draw a visual of the c-stick position
-        GRRLIB_Line(300, 300, cStickX / 4 + 300, -cStickY / 4 + 300, 0xfab387ff);
-        GRRLIB_Circle(cStickX / 4 + 300, -cStickY / 4 + 300, 16, 0xf9e2afff, 1);
+        GRRLIB_Line(384, 256, cStickX / 4 + 384, -cStickY / 4 + 256, 0xfab387ff);
+        GRRLIB_Circle(cStickX / 4 + 384, -cStickY / 4 + 256, 12, 0xf9e2afff, 1);
+        GRRLIB_Rectangle(352, 224, 64, 64, 0xf9e2afff, 0);
 
         GRRLIB_Render(); // Render the frame buffer to the TV
     }
