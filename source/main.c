@@ -19,30 +19,48 @@ int main(int argc, char **argv) {
     //load font
     GRRLIB_texImg *tex_font = GRRLIB_LoadTexture(font_png);
     GRRLIB_InitTileSet(tex_font, 8, 8, 32);
-    
+
+    //initalize some nifty variables to make our lives easier
+    int playerNum = 0;
+    int leftStickX;
+    int leftStickY;
+    int cStickX;
+    int cStickY;
+    int triggerL;
+    int triggerR;
+    int buttonsHeld;
+
     // Loop forever
     while(1) {
-        PAD_ScanPads(); // Scan the GameCube controllers
+        PAD_ScanPads(); // Scan the Gamecube controllers
 
-        //put our analog and button values into nifty little variables because it makes the code look pretty :3
-        int leftStickX = PAD_StickX(0);
-        int leftStickY = PAD_StickY(0);
-        int cStickX = PAD_SubStickX(0);
-        int cStickY = PAD_SubStickY(0);
-        int triggerL = PAD_TriggerL(0);
-        int triggerR = PAD_TriggerR(0);
-        int buttonsHeld = PAD_ButtonsHeld(0);
+        //check for a reason to switch which controller we're reading inputs from
+        for (int i = 0; i < 4; i++) {
+            if (PAD_ButtonsDown(i)) {
+                playerNum = i;
+                break;
+            } else {
+                continue;
+            }
+        }
+
+        //put our analog and button values into our vars
+        leftStickX = PAD_StickX(playerNum);
+        leftStickY = PAD_StickY(playerNum);
+        cStickX = PAD_SubStickX(playerNum);
+        cStickY = PAD_SubStickY(playerNum);
+        triggerL = PAD_TriggerL(playerNum);
+        triggerR = PAD_TriggerR(playerNum);
+        buttonsHeld = PAD_ButtonsHeld(playerNum);
 
         //make the bg to catppuccin mocha base
         GRRLIB_SetBackgroundColour(0x1e, 0x1e, 0x2e, 0xFF);
 
-        /* figure out something to do with this later
         //make our text and format it
-        char msg[255];
-        snprintf(msg, sizeof(msg), "Current Left Stick Coords: %d, %d", leftStickX, leftStickY);
+        char msg[32];
+        snprintf(msg, sizeof(msg), "Current Controller: %d", playerNum + 1);
         //draw our message
-        GRRLIB_Printf(8, 8, tex_font, 0xcdd6f4ff, 2, msg);
-        */
+        GRRLIB_Printf(64, 384, tex_font, 0xcdd6f4ff, 2, msg);
 
         //draw rectangles for the triggers
         GRRLIB_Rectangle(64, 96, 32, -64 + triggerL / 8, 0xcdd6f4ff, (buttonsHeld & PAD_TRIGGER_L) != 0);
@@ -64,7 +82,7 @@ int main(int argc, char **argv) {
         GRRLIB_Circle(480, 160, 16, 0xa6e3a1ff, (buttonsHeld & PAD_BUTTON_A) != 0);
         GRRLIB_Circle(456, 176, 8, 0xf38ba8ff, (buttonsHeld & PAD_BUTTON_B) != 0);
         GRRLIB_Rectangle(504, 144, 12, 32, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_X) != 0);
-        GRRLIB_Rectangle(464, 136, 32, -12, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_Y) != 0);
+        GRRLIB_Rectangle(464, 124, 32, 12, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_Y) != 0);
 
         GRRLIB_Render(); // Render the frame buffer to the TV
     }
