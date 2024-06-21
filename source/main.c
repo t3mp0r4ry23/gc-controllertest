@@ -43,9 +43,12 @@ int main(int argc, char **argv) {
         //draw our message
         GRRLIB_Printf(8, 8, tex_font, 0xcdd6f4ff, 2, msg);
 
+        //draw a rectangle for the left trigger
+        GRRLIB_Rectangle(24, 24, 32, 192 - triggerL / 2, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_L);
+        
         //draw a circle based off of the c-stick position
-        GRRLIB_Line(300, 300, cStickX/4 + 300, -cStickY/4 + 300, 0xfab387ff);
-        GRRLIB_Circle(cStickX/4 + 300, -cStickY/4 + 300, 15, 0xf9e2afff, 1);
+        GRRLIB_Line(300, 300, cStickX / 4 + 300, -cStickY / 4 + 300, 0xfab387ff);
+        GRRLIB_Circle(cStickX / 4 + 300, -cStickY / 4 + 300, 15, 0xf9e2afff, 1);
 
         GRRLIB_Render(); // Render the frame buffer to the TV
     }
