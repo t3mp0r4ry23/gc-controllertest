@@ -73,16 +73,22 @@ int main(int argc, char **argv) {
         GRRLIB_Rectangle(128, 128, 64, 64, 0xcdd6f4ff, 0);
 
         //draw a visual of the c-stick position
-        GRRLIB_Line(384, 256, cStickX / 4 + 384, -cStickY / 4 + 256, 0xfab387ff);
-        GRRLIB_Circle(cStickX / 4 + 384, -cStickY / 4 + 256, 12, 0xf9e2afff, 1);
-        GRRLIB_Rectangle(352, 224, 64, 64, 0xf9e2afff, 0);
+        GRRLIB_Line(416, 256, cStickX / 4 + 416, -cStickY / 4 + 256, 0xfab387ff);
+        GRRLIB_Circle(cStickX / 4 + 416, -cStickY / 4 + 256, 12, 0xf9e2afff, 1);
+        GRRLIB_Rectangle(384, 224, 64, 64, 0xf9e2afff, 0);
 
-        //draw a visual of the face buttons
+        //draw a visual of the primary face buttons
         GRRLIB_Circle(320, 176, 4, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_START) != 0);
         GRRLIB_Circle(480, 160, 16, 0xa6e3a1ff, (buttonsHeld & PAD_BUTTON_A) != 0);
-        GRRLIB_Circle(456, 176, 8, 0xf38ba8ff, (buttonsHeld & PAD_BUTTON_B) != 0);
-        GRRLIB_Rectangle(504, 144, 12, 32, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_X) != 0);
-        GRRLIB_Rectangle(464, 124, 32, 12, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_Y) != 0);
+        GRRLIB_Circle(456, 184, 8, 0xf38ba8ff, (buttonsHeld & PAD_BUTTON_B) != 0);
+        GRRLIB_Rectangle(504, 144, 8, 32, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_X) != 0);
+        GRRLIB_Rectangle(464, 128, 32, 8, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_Y) != 0);
+
+        //draw a visual of the d-pad
+        GRRLIB_Rectangle(192, 248, 40, 16, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_LEFT) != 0);
+        GRRLIB_Rectangle(216, 248, 40, 16, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_RIGHT) != 0);
+        GRRLIB_Rectangle(216, 224, 16, 40, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_UP) != 0);
+        GRRLIB_Rectangle(216, 248, 16, 40, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_DOWN) != 0);
 
         GRRLIB_Render(); // Render the frame buffer to the TV
     }
