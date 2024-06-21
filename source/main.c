@@ -31,7 +31,6 @@ int main(int argc, char **argv) {
         int cStickY = PAD_SubStickY(0);
         int triggerL = PAD_TriggerL(0);
         int triggerR = PAD_TriggerR(0);
-        int buttonsDown = PAD_ButtonsDown(0);
         int buttonsHeld = PAD_ButtonsHeld(0);
 
         //make the bg to catppuccin mocha base
@@ -46,8 +45,9 @@ int main(int argc, char **argv) {
         */
 
         //draw rectangles for the triggers
-        GRRLIB_Rectangle(64, 96, 32, -64 + triggerL / 8, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_L);
-        GRRLIB_Rectangle(544, 96, 32, -64 + triggerR / 8, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_R);
+        GRRLIB_Rectangle(64, 96, 32, -64 + triggerL / 8, 0xcdd6f4ff, (buttonsHeld & PAD_TRIGGER_L) != 0);
+        GRRLIB_Rectangle(544, 96, 32, -64 + triggerR / 8, 0xcdd6f4ff, (buttonsHeld & PAD_TRIGGER_R) != 0);
+        GRRLIB_Rectangle(448, 96, 64, -16, 0xb4befeff, (buttonsHeld & PAD_TRIGGER_Z) != 0);
 
         //draw a visual of the left stick position
         GRRLIB_Line(160, 160, leftStickX / 4 + 160, -leftStickY / 4 + 160, 0xcdd6f4ff);
@@ -58,6 +58,13 @@ int main(int argc, char **argv) {
         GRRLIB_Line(384, 256, cStickX / 4 + 384, -cStickY / 4 + 256, 0xfab387ff);
         GRRLIB_Circle(cStickX / 4 + 384, -cStickY / 4 + 256, 12, 0xf9e2afff, 1);
         GRRLIB_Rectangle(352, 224, 64, 64, 0xf9e2afff, 0);
+
+        //draw a visual of the face buttons
+        GRRLIB_Circle(320, 176, 4, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_START) != 0);
+        GRRLIB_Circle(480, 160, 16, 0xa6e3a1ff, (buttonsHeld & PAD_BUTTON_A) != 0);
+        GRRLIB_Circle(456, 176, 8, 0xf38ba8ff, (buttonsHeld & PAD_BUTTON_B) != 0);
+        GRRLIB_Rectangle(504, 144, 12, 32, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_X) != 0);
+        GRRLIB_Rectangle(464, 136, 32, -12, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_Y) != 0);
 
         GRRLIB_Render(); // Render the frame buffer to the TV
     }
