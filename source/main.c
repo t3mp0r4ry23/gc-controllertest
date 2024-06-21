@@ -43,8 +43,9 @@ int main(int argc, char **argv) {
         //draw our message
         GRRLIB_Printf(8, 8, tex_font, 0xcdd6f4ff, 2, msg);
 
-        //draw a rectangle for the left trigger
+        //draw rectangles for the triggers
         GRRLIB_Rectangle(24, 24, 32, 192 - triggerL / 2, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_L);
+        GRRLIB_Rectangle(90, 24, 32, 192 - triggerR / 2, 0xcdd6f4ff, buttonsHeld & PAD_TRIGGER_R);
         
         //draw a circle based off of the c-stick position
         GRRLIB_Line(300, 300, cStickX / 4 + 300, -cStickY / 4 + 300, 0xfab387ff);
