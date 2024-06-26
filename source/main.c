@@ -56,11 +56,14 @@ int main(int argc, char **argv) {
         //make the bg to catppuccin mocha base
         GRRLIB_SetBackgroundColour(0x1e, 0x1e, 0x2e, 0xFF);
 
-        //make our text and format it
+        //make our texts and format them
         char msg[32];
+        char vibroMsg[32];
         snprintf(msg, sizeof(msg), "Current Controller: %d", playerNum + 1);
-        //draw our message
+        strcpy(vibroMsg, "Hold L+R to test vibration!");
+        //draw our messages
         GRRLIB_Printf(64, 384, tex_font, 0xcdd6f4ff, 2, msg);
+        GRRLIB_Printf(64, 352, tex_font, 0xcdd6f4ff, 2, vibroMsg);
 
         //draw rectangles for the triggers
         GRRLIB_Rectangle(64, 96, 32, -64 + triggerL / 8, 0xcdd6f4ff, (buttonsHeld & PAD_TRIGGER_L) != 0);
@@ -89,6 +92,9 @@ int main(int argc, char **argv) {
         GRRLIB_Rectangle(216, 248, 40, 16, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_RIGHT) != 0);
         GRRLIB_Rectangle(216, 224, 16, 40, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_UP) != 0);
         GRRLIB_Rectangle(216, 248, 16, 40, 0xcdd6f4ff, (buttonsHeld & PAD_BUTTON_DOWN) != 0);
+
+        //vibrate or stop vibrating the controller, depending on button state
+        PAD_ControlMotor(playerNum, (buttonsHeld & PAD_TRIGGER_L) && (buttonsHeld & PAD_TRIGGER_R) ? PAD_MOTOR_RUMBLE : PAD_MOTOR_STOP);
 
         GRRLIB_Render(); // Render the frame buffer to the TV
     }
